@@ -4,8 +4,7 @@
     "lib": [
       "ES2022"
     ],
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "module": "CommonJS",
     "allowJs": false,
     "checkJs": false,
     "esModuleInterop": true,

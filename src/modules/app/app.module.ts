@@ -13,8 +13,6 @@ import UsersModule from '~modules/users/users.module.js';
 import WishesModule from '~modules/wishes/wishes.module.js';
 import WishlistsModule from '~modules/wishlists/wishlists.module.js';
 
-import AppController from './app.controller.js';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,7 +31,7 @@ import AppController from './app.controller.js';
     AuthModule,
     HashModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [],
 })
 export default class AppModule {}

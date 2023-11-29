@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'url';
-
 const GlobalConfig = () => ({
   port: Number(process.env.PORT),
   jwtSecret: process.env.JWT_SECRET,
@@ -11,9 +9,7 @@ const GlobalConfig = () => ({
     username: process.env.DB_USERNAME,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    entities: [
-      fileURLToPath(new URL('../**/*.entity.{js,ts}', import.meta.url)),
-    ],
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
     logging: false,
   },
