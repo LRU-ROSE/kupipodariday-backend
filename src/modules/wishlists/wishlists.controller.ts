@@ -6,7 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Req,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 
@@ -32,7 +32,7 @@ export default class WishlistsController {
   @Post()
   create(
     @Body() dto: CreateWishlistDto,
-    @Req() { user }: TUserRequest,
+    @Request() { user }: TUserRequest,
   ): Promise<TWishlist> {
     return this.wishlistsService.create(dto, user.id);
   }
@@ -46,7 +46,7 @@ export default class WishlistsController {
   update(
     @Param('id') id: number,
     @Body() dto: UpdateWishlistDto,
-    @Req() { user }: TUserRequest,
+    @Request() { user }: TUserRequest,
   ): Promise<TWishlist> {
     return this.wishlistsService.update(id, dto, user.id);
   }
@@ -54,7 +54,7 @@ export default class WishlistsController {
   @Delete(':id')
   removeOne(
     @Param('id') id: number,
-    @Req() { user }: TUserRequest,
+    @Request() { user }: TUserRequest,
   ): Promise<TWishlist> {
     return this.wishlistsService.removeOne(id, user.id);
   }

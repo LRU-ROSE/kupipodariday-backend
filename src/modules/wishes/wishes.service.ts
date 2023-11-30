@@ -8,7 +8,11 @@ import UsersService from '~modules/users/users.service.js';
 import CreateWishDto from './dto/create-wish.dto.js';
 import UpdateWishDto from './dto/update-wish.dto.js';
 import Wish from './entities/wish.entity.js';
-import { type TWish, wishToTWish } from './types.js';
+import {
+  type TWish,
+  type TWishWithoutRelations,
+  wishToTWish,
+} from './types.js';
 
 @Injectable()
 export default class WishesService {
@@ -93,10 +97,11 @@ export default class WishesService {
     return wishToTWish(wish);
   }
 
-  async findMany(giftsId: number[]): Promise<TWish[]> {
-    const wishes = await this.wishRepository.find({
+  async findManyWithoutRelations(
+    giftsId: number[],
+  ): Promise<TWishWithoutRelations[]> {
+    return await this.wishRepository.find({
       where: { id: In(giftsId) },
     });
-    return wishes.map(wishToTWish);
   }
 }

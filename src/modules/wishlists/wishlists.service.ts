@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 
 import { userToTUser } from '~common/types.js';
 import UsersService from '~modules/users/users.service.js';
-import { wishToTWish } from '~modules/wishes/types.js';
 import WishesService from '~modules/wishes/wishes.service.js';
 
 import CreateWishlistDto from './dto/create-wishlist.dto.js';
@@ -16,7 +15,6 @@ import type { TWishlist } from './types.js';
 export const wishlistToTWishlist = (wishlist: Wishlist): TWishlist => ({
   ...wishlist,
   owner: userToTUser(wishlist.owner),
-  items: wishlist.items.map(wishToTWish),
 });
 
 @Injectable()
@@ -37,7 +35,9 @@ export default class WishlistsService {
 
   async create(dto: CreateWishlistDto, userId: number): Promise<TWishlist> {
     const user = await this.usersService.findOneById(userId);
-    const wishes = await this.wishesService.findMany(dto.itemsId);
+    const wishes = await this.wishesService.findManyWithoutRelations(
+      dto.itemsId,
+    );
 
     const wishlist = await this.wishlistRepository.save({
       ...dto,
@@ -72,7 +72,7 @@ export default class WishlistsService {
     }
     if (dto.itemsId) {
       const { itemsId, ...restDto } = dto;
-      const wishes = await this.wishesService.findMany(itemsId);
+      const wishes = await this.wishesService.findManyWithoutRelations(itemsId);
       wishlist.items.push(...wishes);
       await this.wishlistRepository.save(wishlist);
       await this.wishlistRepository.update(id, restDto);
